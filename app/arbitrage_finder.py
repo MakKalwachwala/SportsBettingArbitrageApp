@@ -4,6 +4,9 @@ import json
 
 from dotenv import load_dotenv
 
+from app.alpha import ODDS_API_KEY
+
+
 load_dotenv()
 
 ODDS_API_KEY = os.getenv("ODDS_API_KEY")
@@ -115,13 +118,14 @@ def arbitrage_seeker(desired_sport, desired_winnings):
 
 
 #Main 
+if __name__ == "__main__":
 
-desired_sport = input ("Sports League: (Options: 'NFL')")
+    desired_sport = input ("Sports League: (Options: 'NFL')")
 
-if (desired_sport == 'NFL'):
-    desired_sport = "americanfootball_nfl"
-    desired_winnings = input ("Max bet:")
-    arbitrage_seeker(desired_sport, desired_winnings)
-else:
-    print ("Sorry, we do not currently offer data on that league.")
+    if (desired_sport == 'NFL'):
+        desired_sport = "americanfootball_nfl"
+        desired_winnings = input ("Max bet:")
+        arbitrage_seeker(desired_sport, desired_winnings)
+    else:
+        print ("Sorry, we do not currently offer data on that league.")
 
