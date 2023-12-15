@@ -21,4 +21,4 @@ IPython
 
 pgeocode
 
-dateutil.parser
+python-dateutil
