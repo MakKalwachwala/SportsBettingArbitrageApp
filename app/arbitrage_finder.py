@@ -2,6 +2,7 @@ import os
 import requests
 import json
 
+from pprint import pprint
 from dotenv import load_dotenv
 
 from app.alpha import ODDS_API_KEY
@@ -35,7 +36,10 @@ def arbitrage_calculator(home_odds, away_odds, desired_winnings):
 
 def arbitrage_seeker(desired_sport, desired_winnings):
 
-    request_url = f"https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/?regions=us&oddsFormat=decimal&apiKey={ODDS_API_KEY}"
+    if (desired_sport == "NFL"):
+        desired_sport = "americanfootball_nfl"
+
+    request_url = f"https://api.the-odds-api.com/v4/sports/{desired_sport}/odds/?regions=us&oddsFormat=decimal&apiKey={ODDS_API_KEY}"
 
     r = requests.get(request_url)
 
@@ -43,7 +47,7 @@ def arbitrage_seeker(desired_sport, desired_winnings):
 
     nfl_games = []
 
-    final_data = [{}]
+    final_data = []
 
     for entry in data:
         if entry['sport_key'] == 'americanfootball_nfl':
@@ -108,16 +112,17 @@ def arbitrage_seeker(desired_sport, desired_winnings):
 
         #print (best_away_odds)
 
-        desired_winnings = 200.00
-
         arbitrage_calculator(best_home_odds, best_away_odds, desired_winnings)
 
         output = arbitrage_calculator(best_home_odds, best_away_odds, desired_winnings)
 
-        data = [{"Home Team": home_team}, {"Away Team": away_team}, {"Arbitrage:": output}]
+        
+        data = {"Home Team": home_team, "Home Sportsbook": f"{best_home_odds_sportsbook} ({best_home_odds})" , "Away Team": away_team, "Away Sportsbook": f"{best_away_odds_sportsbook} ({best_away_odds})", "Arbitrage": output}
+
 
         final_data.append(data)
 
+    #pprint (final_data)
     return (final_data)
 
 
@@ -125,6 +130,5 @@ def arbitrage_seeker(desired_sport, desired_winnings):
 if __name__ == "__main__":
 
 
-    user_name = input("test")
     arbitrage_seeker("NFL", 100.00)
 

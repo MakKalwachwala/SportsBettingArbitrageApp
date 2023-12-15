@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h2>Arbitrage Dashboard {{desired_sport}} {{desired_winnings}}</h2>
+    <h2>Arbitrage Dashboard {{desired_sport}}</h2>
 
 
 
@@ -16,7 +16,9 @@
         <thead>
             <tr>
                 <th scope="col">Home Team</th>
+                <th scope="col">Home Sports Book</th>
                 <th scope="col">Away Team</th>
+                <th scope="col">Away Sports Book</th>
                 <th scope="col">Arbitrage</th>
             </tr>
         </thead>
@@ -29,8 +31,11 @@
         {% for row in data %}
             <tr>
                 <td>{{ row["Home Team"] }}</td>
-                <td>{{ row["Away Team"] }}%</td>
-                <td>{{ row["Arbitrage"] }}%</td>
+                <td>{{ row["Home Sportsbook"] }}</td>
+                <td>{{ row["Away Team"] }}</td>
+                <td>{{ row["Away Sportsbook"] }}</td>
+                <td>{{ row["Arbitrage"] }}</td>
+                
             </tr>
         {% endfor %}
 

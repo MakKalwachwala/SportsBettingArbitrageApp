@@ -22,10 +22,10 @@ def arbitrage_dashboard():
         request_data = dict(request.args)
         print("URL PARAMS:", request_data)
 
-    desired_sport = request_data.get("desired_sport") or "NFL"
-    desired_winnings = request_data.get("desired_winnings") or 100.00
+    desired_sport = request_data.get("sports_league") 
+    desired_winnings = request_data.get("desired_winnings") 
     try:
-        data = arbitrage_seeker(desired_sport, desired_winnings)
+        data = arbitrage_seeker(desired_sport, float(desired_winnings))
         return render_template("arbitrage_dashboard.html",
         data = data,
         desired_sport = desired_sport,
