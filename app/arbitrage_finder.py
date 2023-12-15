@@ -4,7 +4,6 @@ import json
 
 from dotenv import load_dotenv
 
-from app.alpha import ODDS_API_KEY
 
 
 load_dotenv()
