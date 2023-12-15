@@ -2,6 +2,7 @@ import os
 import requests
 import json
 
+from pprint import pprint
 from dotenv import load_dotenv
 
 from app.alpha import ODDS_API_KEY
@@ -23,15 +24,20 @@ def arbitrage_calculator(home_odds, away_odds, desired_winnings):
 
         profit = desired_winnings - stake_home - stake_away
 
-        print (f"Bet placed on home team: {stake_home}")
-        print (f"Bet placed on away team: {stake_away}")
-        print (f"Total Profit: {profit}")
+        #print (f"Bet placed on home team: {stake_home}")
+        #print (f"Bet placed on away team: {stake_away}")
+        #print (f"Total Profit: {profit}")
+        return (f"Bet placed on home team: {stake_home}, Bet placed on away team: {stake_away}, Total Profit: {profit}")
+
     else:
-        print ("No arbitrage oppurtunity")
+        return ("No arbitrage oppurtunity")
 
 
 
 def arbitrage_seeker(desired_sport, desired_winnings):
+
+    if (desired_sport == "NFL"):
+        desired_sport = "americanfootball_nfl"
 
     request_url = f"https://api.the-odds-api.com/v4/sports/{desired_sport}/odds/?regions=us&oddsFormat=decimal&apiKey={ODDS_API_KEY}"
 
@@ -41,14 +47,11 @@ def arbitrage_seeker(desired_sport, desired_winnings):
 
     nfl_games = []
 
+    final_data = []
+
     for entry in data:
         if entry['sport_key'] == 'americanfootball_nfl':
             nfl_games.append(entry)
-
-
-    for game in nfl_games:
-        print (game['home_team']+"(H)", "vs" , game['away_team'] + "(A)" )
-
 
     first_game = []
 
@@ -74,7 +77,7 @@ def arbitrage_seeker(desired_sport, desired_winnings):
         away_team = (key['markets'][0]['outcomes'][1]["name"])
 
 
-        print (f"----BEST {home_team} (H) ODDS----")
+        #print (f"----BEST {home_team} (H) ODDS----")
 
 
         best_home_odds = 0.00
@@ -88,44 +91,44 @@ def arbitrage_seeker(desired_sport, desired_winnings):
                 best_home_odds = line[1]
                 best_home_odds_sportsbook = line[0]
 
-        print (best_home_odds_sportsbook)
-        print (best_home_odds)
+        #print (best_home_odds_sportsbook)
+        #print (best_home_odds)
 
 
 
-        print (f"---- BEST {away_team} (A) ODDS----")
+        #print (f"---- BEST {away_team} (A) ODDS----")
 
         best_away_odds = 0.00
         best_away_odds_sportsbook = " "
 
         for line in odds_away.items():
 
-
-
             if (line[1]) > best_away_odds:
                 best_away_odds = line[1]
                 best_away_odds_sportsbook = line[0]
 
 
-        print (best_away_odds_sportsbook)
+        #print (best_away_odds_sportsbook)
 
-        print (best_away_odds)
-
-        desired_winnings = 200.00
+        #print (best_away_odds)
 
         arbitrage_calculator(best_home_odds, best_away_odds, desired_winnings)
 
+        output = arbitrage_calculator(best_home_odds, best_away_odds, desired_winnings)
+
+        
+        data = {"Home Team": home_team, "Home Sportsbook": f"{best_home_odds_sportsbook} ({best_home_odds})" , "Away Team": away_team, "Away Sportsbook": f"{best_away_odds_sportsbook} ({best_away_odds})", "Arbitrage": output}
+
+
+        final_data.append(data)
+
+    #pprint (final_data)
+    return (final_data)
 
 
 #Main 
 if __name__ == "__main__":
 
-    desired_sport = input ("Sports League: (Options: 'NFL')")
 
-    if (desired_sport == 'NFL'):
-        desired_sport = "americanfootball_nfl"
-        desired_winnings = input ("Max bet:")
-        arbitrage_seeker(desired_sport, desired_winnings)
-    else:
-        print ("Sorry, we do not currently offer data on that league.")
+    arbitrage_seeker("NFL", 100.00)
 
