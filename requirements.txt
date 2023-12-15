@@ -1,15 +1,13 @@
 
-
 # this is the "requirements.txt" file...
 
 
 requests
 
-plotly
 
 python-dotenv
 
-sendgrid==6.5.0
+plotly
 
 pandas
 
