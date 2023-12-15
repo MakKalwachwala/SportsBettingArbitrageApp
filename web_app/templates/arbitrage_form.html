@@ -1,0 +1,35 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "arbitrage_form" %}
+
+{% block content %}
+
+    <h2>Arbitrage Form</h2>
+
+    <p>Request Arbitrage Data...</p>
+
+    <form action="/arbitrage/dashboard" method="POST">
+
+    
+        <label>Sports League:</label>
+        <select name= "sports_league">
+            <option value="NFL">NFL</option>
+        </select>
+        <br>
+
+        <label>Desired Winnings ($):</label>
+        <input type="text" name="desired_winnings" placeholder="100" value="100">
+        <br>
+
+
+
+        <button class="btn btn-success">Submit</button>
+    </form>
+
+    <script type="text/javascript">
+
+
+
+    </script>
+
+
+{% endblock %}

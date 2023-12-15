@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from flask import Flask
 
 from web_app.routes.home_routes import home_routes
-#from web_app.routes.book_routes import book_routes
+from web_app.routes.arbitrage_routes import arbitrage_routes
 #from web_app.routes.weather_routes import weather_routes
 
 #load_dotenv()
@@ -19,7 +19,7 @@ def create_app():
     app.config["SECRET_KEY"] = SECRET_KEY
 
     app.register_blueprint(home_routes)
-    #app.register_blueprint(book_routes)
+    app.register_blueprint(arbitrage_routes)
     #app.register_blueprint(weather_routes)
     return app
 
