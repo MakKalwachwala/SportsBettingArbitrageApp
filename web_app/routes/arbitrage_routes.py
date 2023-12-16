@@ -23,14 +23,14 @@ def arbitrage_dashboard():
         print("URL PARAMS:", request_data)
 
     desired_sport = request_data.get("sports_league")  
-    desired_winnings = request_data.get("desired_winnings") 
+    max_bet = request_data.get("max_bet") 
     week = request_data.get("week")
     try:
-        data = arbitrage_seeker(desired_sport, float(desired_winnings), week)
+        data = arbitrage_output(desired_sport, float(max_bet), week)
         return render_template("arbitrage_dashboard.html",
         data = data,
         desired_sport = desired_sport,
-        desired_winnings = desired_winnings
+        max_bet = max_bet
         )
     except Exception as err:
 
