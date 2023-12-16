@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, flash
 
-from app.arbitrage_finder import arbitrage_seeker, arbitrage_calculator
+from app.arbitrage_finder import arbitrage_output
 
 arbitrage_routes = Blueprint("arbitrage_routes", __name__)
 
