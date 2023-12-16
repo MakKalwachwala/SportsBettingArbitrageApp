@@ -21,3 +21,4 @@ IPython
 
 pgeocode
 
+python-dateutil
