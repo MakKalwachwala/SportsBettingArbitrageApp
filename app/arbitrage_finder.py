@@ -75,7 +75,7 @@ def data_retrieval(desired_sport, week):
         game_time = date_conversion(data[1]["commence_time"])
 
         if unix_to < game_time or game_time < unix_from:
-            
+            data = None
             return data
         else:
             return data
