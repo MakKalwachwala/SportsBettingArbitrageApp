@@ -22,10 +22,11 @@ def arbitrage_dashboard():
         request_data = dict(request.args)
         print("URL PARAMS:", request_data)
 
-    desired_sport = request_data.get("sports_league") 
+    desired_sport = request_data.get("sports_league")  
     desired_winnings = request_data.get("desired_winnings") 
+    week = request_data.get("week")
     try:
-        data = arbitrage_seeker(desired_sport, float(desired_winnings))
+        data = arbitrage_seeker(desired_sport, float(desired_winnings), week)
         return render_template("arbitrage_dashboard.html",
         data = data,
         desired_sport = desired_sport,
@@ -36,7 +37,5 @@ def arbitrage_dashboard():
 
         print('OOPS', err)
 
-        flash("Market Data Error. Please check your symbol and try again!", "danger")
+        flash("Market Data Error. Market Data is not available for selected week", "danger")
         return redirect("/arbitrage/form")
-
-
